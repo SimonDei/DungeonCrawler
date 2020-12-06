@@ -122,18 +122,22 @@ LRESULT draw_map(_In_ LPCMAP const p_map) {
         const UINT8 player_y = p_map->_minimap->_player_y;
 
         /* Zeichne die Wände am oberen und unteren Rand. */
+        /*
         UINT8 x;
         for (x = 0; x < GAME_RIGHT / GAME_TILE_SIZE; x++) {
             draw_sprite(p_map->_wall_sprite, x * GAME_TILE_SIZE, 0);
             draw_sprite(p_map->_wall_sprite, x * GAME_TILE_SIZE, GAME_BOTTOM);
         }
-        
+        */
+
         /* Zeichne die Wände am linken und rechtem Rand. */
+        /*
         UINT8 y;
         for (y = 0; y < GAME_BOTTOM / GAME_TILE_SIZE; y++) {
             draw_sprite(p_map->_wall_sprite, 0, y * GAME_TILE_SIZE);
             draw_sprite(p_map->_wall_sprite, GAME_RIGHT - GAME_TILE_SIZE, y * GAME_TILE_SIZE);
         }
+        */
 
         /* Zeichne die rechte Tür. */
         if (p_map->_rooms[player_y][player_x + 1] != NULL) {
@@ -179,6 +183,22 @@ LRESULT draw_map(_In_ LPCMAP const p_map) {
             al_draw_rectangle(ROOM_DOOR_RIGHT_X, ROOM_DOOR_RIGHT_Y, ROOM_DOOR_RIGHT_X + GAME_TILE_SIZE, ROOM_DOOR_RIGHT_Y + GAME_TILE_SIZE, al_map_rgb(255, 0, 0), 2.0f);
             al_draw_rectangle(ROOM_DOOR_TOP_X, ROOM_DOOR_TOP_Y, ROOM_DOOR_TOP_X + GAME_TILE_SIZE, ROOM_DOOR_TOP_Y + GAME_TILE_SIZE, al_map_rgb(255, 0, 0), 2.0f);
             al_draw_rectangle(ROOM_DOOR_BOTTOM_X, ROOM_DOOR_BOTTOM_Y, ROOM_DOOR_BOTTOM_X + GAME_TILE_SIZE, ROOM_DOOR_BOTTOM_Y + GAME_TILE_SIZE, al_map_rgb(255, 0, 0), 2.0f);
+
+            /* Rote Grenze oben */
+            al_draw_rectangle(0, 0, ROOM_DOOR_TOP_X, ROOM_DOOR_TOP_Y + GAME_TILE_SIZE, al_map_rgb(255, 0, 0), 2.0f);
+            al_draw_rectangle(ROOM_DOOR_TOP_X + GAME_TILE_SIZE, 0, GAME_RIGHT, ROOM_DOOR_TOP_Y + GAME_TILE_SIZE, al_map_rgb(255, 0, 0), 2.0f);
+
+            /* Rote Grenze unten */
+            al_draw_rectangle(0, ROOM_DOOR_BOTTOM_Y, ROOM_DOOR_BOTTOM_X, ROOM_DOOR_BOTTOM_Y + GAME_TILE_SIZE, al_map_rgb(255, 0, 0), 2.0f);
+            al_draw_rectangle(ROOM_DOOR_BOTTOM_X + GAME_TILE_SIZE, ROOM_DOOR_BOTTOM_Y, GAME_RIGHT, ROOM_DOOR_BOTTOM_Y + GAME_TILE_SIZE, al_map_rgb(255, 0, 0), 2.0f);
+
+            /* Rote Grenze links */
+            al_draw_rectangle(0, 0, ROOM_DOOR_LEFT_X + GAME_TILE_SIZE, ROOM_DOOR_LEFT_Y, al_map_rgb(255, 0, 0), 2.0f);
+            al_draw_rectangle(0, ROOM_DOOR_LEFT_Y + GAME_TILE_SIZE, ROOM_DOOR_LEFT_X + GAME_TILE_SIZE, GAME_BOTTOM + GAME_TILE_SIZE, al_map_rgb(255, 0, 0), 2.0f);
+
+            /* Rote Grenze rechts */
+			al_draw_rectangle(ROOM_DOOR_RIGHT_X, 0, ROOM_DOOR_RIGHT_X + GAME_TILE_SIZE, ROOM_DOOR_RIGHT_Y, al_map_rgb(255, 0, 0), 2.0f);
+			al_draw_rectangle(ROOM_DOOR_RIGHT_X, ROOM_DOOR_RIGHT_Y + GAME_TILE_SIZE, ROOM_DOOR_RIGHT_X, GAME_BOTTOM + GAME_TILE_SIZE, al_map_rgb(255, 0, 0), 2.0f);
         }
 
         /* Ruft die Zeichenfunktionen für den aktuellen Raum auf. */
