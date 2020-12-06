@@ -3,6 +3,8 @@
  */
 
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 
@@ -15,6 +17,8 @@
 int main(int argc, char** argv) {
     /* Initialisiert die Allegro Bibliothek und benötigte Addons. */
     al_init();
+    al_init_font_addon();
+    al_init_ttf_addon();
     al_init_image_addon();
     al_init_primitives_addon();
 
@@ -23,7 +27,7 @@ int main(int argc, char** argv) {
     al_install_mouse();
 
     al_set_new_display_flags(ALLEGRO_OPENGL | ALLEGRO_WINDOWED);
-    
+
     /* Erstellt ein Fenster mit der gegebenen Dimension. */
     ALLEGRO_DISPLAY* display = al_create_display(WINDOW_WIDTH, WINDOW_HEIGHT);
     if (display == NULL) {
@@ -35,7 +39,7 @@ int main(int argc, char** argv) {
     if (glewInit() != GLEW_OK) {
         return EXIT_FAILURE;
     }
-    
+
     /* Erstellt eine Event-Queue, die Events des Fensters abfängt, um diese später zu bearbeiten. */
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
     if (queue == NULL) {
@@ -58,6 +62,9 @@ int main(int argc, char** argv) {
     BOOL running = TRUE;
     BOOL redraw = TRUE;
 
+    /* Lade die Standardschriftart für das Spiel. */
+    ALLEGRO_FONT* game_font = al_load_ttf_font(GAME_FONT_PATH, 46, 0);
+
     /* Lade das Hintergrundbild */
     ALLEGRO_BITMAP* background_image = al_load_bitmap("res/background.tga");
 
@@ -73,9 +80,15 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
+    /* Erstelle eine HUD Struktur die Spielinfos. */
+    LPHUD hud = NULL;
+    if (FAILED(create_hud(&hud))) {
+        return EXIT_FAILURE;
+    }
+
     LOG_INFO("Initialisierungen erfolgreich abgeschlossen!");
     LOG_INFO("Spiel wird gestartet!");
-           
+
     /* Starte den Timer kurz vor der Spielschleife für maximale Präzision. */
     al_start_timer(fps_timer);
     while (running == TRUE) {
@@ -105,7 +118,23 @@ int main(int argc, char** argv) {
         if (redraw == TRUE && al_is_event_queue_empty(queue)) {
             al_draw_bitmap(background_image, 0, 0, 0);
 
-            /* Nur wenn der Spieler noch HP übrig hat, läuft die Logik des Spiels weiter. */
+            /*
+             * Zeichenreihenfolge:
+             * HUD =>
+             *      MINIMAP
+             * MAP =>
+             *      ROOM =>
+             *           ENEMY
+             *           ENEMY
+             *           ENEMY
+             * PLAYER
+             */
+            draw_hud(hud, player->_hp);
+            draw_minimap(map);
+            draw_map(map);
+            draw_player(player);
+
+			/* Nur wenn der Spieler noch HP übrig hat, läuft die Logik des Spiels weiter. */
             if (player->_hp > 0) {
                 /* Durch das Bewegen wenn der Timer tickt wird eine gleichmäßige Bewegung ermöglicht. */
                 move_player(player);
@@ -118,36 +147,22 @@ int main(int argc, char** argv) {
                 check_enemy_hits_player(map, player, map->_minimap->_player_x, map->_minimap->_player_y);
             /* Hat der Spieler keine HP mehr, wird das "Verloren" Bild angezeigt. */
             } else {
-                
+				al_draw_text(game_font, al_map_rgb(255, 0, 0), GAME_RIGHT / 2.0f - 150.0f, GAME_BOTTOM / 2.0f - 25.0f, 0, "VERLOREN!");
             }
 
-            /*
-             * Zeichenreihenfolge:
-             * HUD =>
-             *      MINIMAP
-             * MAP =>
-             *      ROOM =>
-             *           ENEMY
-             *           ENEMY
-             *           ENEMY
-             * PLAYER
-             */
-            draw_hud();
-            draw_minimap(map);
-            draw_map(map);
-            draw_player(player);
-                        
             al_flip_display();
             redraw = FALSE;
         }
     }
-        
+
     /* Gebe den Speicher der eigenen Strukturen wieder frei. */
+    destroy_hud(hud);
     destroy_player(player);
     destroy_map(map);
 
     /* Gebe den Speicher der benutzten Allegro Strukturen wieder frei. */
     al_destroy_bitmap(background_image);
+    al_destroy_font(game_font);
     al_destroy_timer(fps_timer);
     al_destroy_event_queue(queue);
     al_destroy_display(display);
