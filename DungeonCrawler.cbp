@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="DungeonCrawler" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/DungeonCrawler" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c90" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lallegro_monolith-debug" />
+					<Add option="-lglew32" />
+					<Add option="-lopengl32" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/DungeonCrawler" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="buffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="buffer.h" />
+		<Unit filename="bullet.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bullet.h" />
+		<Unit filename="constants.h" />
+		<Unit filename="enemy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="enemy.h" />
+		<Unit filename="file.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="file.h" />
+		<Unit filename="hud.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="hud.h" />
+		<Unit filename="input.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="input.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="map.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="map.h" />
+		<Unit filename="math.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="math.h" />
+		<Unit filename="minimap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="minimap.h" />
+		<Unit filename="player.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="player.h" />
+		<Unit filename="program.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="program.h" />
+		<Unit filename="result.h" />
+		<Unit filename="room.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="room.h" />
+		<Unit filename="room_type.h" />
+		<Unit filename="shader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="shader.h" />
+		<Unit filename="shader_type.h" />
+		<Unit filename="sprite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sprite.h" />
+		<Unit filename="turn_direction.h" />
+		<Unit filename="type.h" />
+		<Unit filename="util.h" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
