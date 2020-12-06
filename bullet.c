@@ -24,9 +24,14 @@ LRESULT CALLBACK create_bullet(_Out_ LPBULLET* pp_bullet) {
 
 LRESULT draw_bullet(_In_ LPBULLET const p_bullet) {
     if (p_bullet != NULL) {
-        if (FAILED(draw_sprite(p_bullet->_sprite, p_bullet->_x, p_bullet->_y))) {
+        if (FAILED(draw_rotated_sprite(p_bullet->_sprite, p_bullet->_x, p_bullet->_y, p_bullet->_active_direction))) {
             return LR_FAILED;
         }
+
+        if (DEBUG_MODE == TRUE) {
+			al_draw_rectangle(p_bullet->_x, p_bullet->_y, p_bullet->_x + p_bullet->_sprite->_width, p_bullet->_y + p_bullet->_sprite->_height, al_map_rgb(255, 0, 0), 2.0f);
+        }
+
         switch (p_bullet->_active_direction) {
             case DIRECTION_UP:
                 p_bullet->_y -= BULLET_MOVEMENT_SPEED;

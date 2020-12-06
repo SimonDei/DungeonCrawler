@@ -22,6 +22,9 @@
 /** Gibt die Bilder pro Sekunde an, mit denen das Spiel gezeichnet wird. */
 #define FPS                     60.0
 
+/** Der Pfad zur Schriftart, die standardgemäß verwendet wird. */
+#define GAME_FONT_PATH          "res/game_font.ttf"
+
 /** Der Pfad zum Bild für den Spielercharakter. */
 #define PLAYER_SPRITE_PATH      "res/player.tga"
 /** Der Pfad zum Bild für den Gegnercharakter. */
@@ -36,6 +39,8 @@
 #define BULLET_SPRITE_PATH      "res/bullet.tga"
 /** Der Pfad zum Bild für die Explosion. */
 #define EXPLOSION_SPRITE_PATH   "res/explosion.tga"
+/** Der Pfad zum Bild für ein Herz. */
+#define HEART_SPRITE_PATH       "res/heart.tga"
 
 /** Die Geschwindigkeit, mit der sich der Spieler bewegt. */
 #define PLAYER_MOVEMENT_SPEED   4.0f
@@ -126,5 +131,10 @@
 #define MINIMAP_BOTTOM          (HUD_TOP + (MINIMAP_TILE_SIZE * MINIMAP_HEIGHT_IN_TILES))
 /** Die Y Position der unteren rechten Ecke der Minimap. */
 #define MINIMAP_RIGHT           (MINIMAP_TILE_SIZE * MINIMAP_WIDTH_IN_TILES)
+
+/** Die X Position des ersten Herzes für die Spieler HP. */
+#define HUD_FIRST_HEART_X       (MINIMAP_RIGHT + HUD_TILE_SIZE)
+/** Die Y Position des ersten Herzes für die Spieler HP. */
+#define HUD_FIRST_HEART_Y       MINIMAP_TOP
 
 #endif /* CONSTANTS_H_INCLUDED */
